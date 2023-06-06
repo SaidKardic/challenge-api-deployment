@@ -1,24 +1,37 @@
-from typing import Union
+from typing import Union, Literal, Optional
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Union[bool, None] = None
+class Input(BaseModel):
+    area: int
+    property_type: Literal["APARTMENT", "HOUSE"]
+    rooms_number: int
+    zip_code: int
+    land_area: Optional[int] | None=None
+    garden: Optional[bool] | None=None
+    garden_area: Optional[int] | None=None
+    equipped_kitchen: Optional[bool] | None=None
+    swimming_pool: Optional[bool] | None=None
+    furnished: Optional[bool] | None=None
+    open_fire: Optional[bool] | None=None
+    terrace: Optional[bool] | None=None
+    terrace_area: Optional[int] | None=None
+    facades_number: Optional[int] | None=None
+    building_state: Optional[Literal["NEW", "GOOD", "TO RENOVATE", "JUST RENOVATED", "TO REBUILD"]] | None=None
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+async def home():
+    return "Alive"
 
+@app.get("/predict")
+async def data_format():
+    return "House data must be provided in the following format: area: int, property_type: [APARTMENT or HOUSE], rooms_number: int, zip_code: int, land_area: Optional[int, garden: Optional[bool], garden_area: Optional[int], equipped_kitchen: Optional[bool], swimming_pool: Optional[bool], furnished: Optional[bool], open_fire: Optional[bool], terrace: Optional[bool], terrace_area: Optional[int], facades_number: Optional[int], building_state: Optional[NEW, GOOD, TO RENOVATE, JUST RENOVATED, TO REBUILD]"
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_price": item.price, "item_id": item_id}
+@app.post("/predict")
+async def make_prediction(json_data: Input):
+    processed_data = preprocess(json_data)
+    prediction = predict(processed_data)
+    return prediction

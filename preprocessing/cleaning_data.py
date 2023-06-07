@@ -9,8 +9,9 @@ def preprocess(json_data):
                         'furnished':'Furnished', 'open_fire':'How many fireplaces?', 'land_area': 'Surface of the plot (m²)', 
                         'facades_number':'Number of frontages', 'building_state': 'Building condition scale'})
     
-    property_type_dict = {'HOUSE': 1, 'APARTMENT': 0}
-    df['Type of Property'] = df.replace(property_type_dict, inplace=True)
+   
+    property_type_dict = {"HOUSE": 1, "APARTMENT": 0}
+    df['Type of Property'].replace(property_type_dict, inplace=True)
 
     boolean_dict = {False: 0, True: 1}
     columns_to_binary = ['Kitchen type scale', 'Swimming pool', 'Garden', 'Terrace', 'Furnished', 'How many fireplaces?']
@@ -40,6 +41,6 @@ def preprocess(json_data):
        'Terrace surface (m²)', 'Garden', 'Garden surface (m²)',
        'Surface of the plot (m²)', 'Number of frontages', 'Swimming pool',
        'Kitchen type scale', 'Building condition scale', 'Region']]
-
+    
     return df
 

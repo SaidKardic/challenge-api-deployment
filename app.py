@@ -4,7 +4,9 @@ from predict.prediction import predict
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from fastapi.encoders import jsonable_encoder
+import os
 
+PORT = os.environ.get("PORT", 8000)
 app = FastAPI()
 
 class Input(BaseModel):

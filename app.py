@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 import os
 
 PORT = os.environ.get("PORT", 8000)
-app = FastAPI()
+app = FastAPI(port=PORT)
 
 class Input(BaseModel):
     area: int

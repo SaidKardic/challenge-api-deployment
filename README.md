@@ -70,7 +70,7 @@ json
 
 The prediction field will contain the predicted price for the input house data. If the prediction is not available or there is an error, the prediction field will be null.
 
-The API will be accessible at http://localhost.
+The API will be accessible at https://price-prediction-api-d58r.onrender.com/docs.
 
 ### Documentation
 
